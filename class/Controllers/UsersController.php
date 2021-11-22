@@ -78,6 +78,24 @@ class UsersController
     }
 
     /**
+     * .
+     */
+    public function getUsersSelect(): array
+    {
+        $tabUsersSelect = [];
+
+        // Get all users :
+        $usersService = new UsersService();
+        $usersSelect = $usersService->getUsers();
+
+        foreach ($usersSelect as $userSelect) {
+            array_push($tabUsersSelect,[($userSelect->getFirstname()) . ' ' . $userSelect->getLastname(), ($userSelect->getid())]);
+        }
+
+        return $tabUsersSelect;
+    }
+
+    /**
      * Update the user.
      */
     public function updateUser(): string

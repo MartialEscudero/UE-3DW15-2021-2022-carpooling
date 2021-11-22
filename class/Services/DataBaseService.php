@@ -228,4 +228,82 @@ class DataBaseService
 
         return $isOk;
     }
+
+    /**
+     * Return all ads.
+     */
+    public function getAds(): array
+    {
+        $ads = [];
+
+        $sql = 'SELECT * FROM ads';
+        $query = $this->connection->query($sql);
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
+        if (!empty($results)) {
+            $ads = $results;
+        }
+
+        return $ads;
+    }
+
+    /**
+     * Create a ad.
+     */
+    public function createAd(string $price, string $placeStart, string $placeEnd, Datetime $dateStart): string
+    {
+        $adId = '';
+
+        $data = [
+            'price' => $price,
+            'placeStart' => $placeStart,
+            'placeEnd' => $placeEnd,
+            'dateStart' => $dateStart->format(DateTime::RFC3339),
+        ];
+        $sql = 'INSERT INTO ads (price, placeStart, placeEnd, dateStart) VALUES (:price, :placeStart, :placeEnd, :dateStart)';
+        $query = $this->connection->prepare($sql);
+        $isOk = $query->execute($data);
+        if ($isOk) {
+            $adId = $this->connection->lastInsertId();
+        }
+
+        return $adId;
+    }
+
+    /**
+     * Update a ad.
+     */
+    public function updateAd(string $id, string $price, string $placeStart, string $placeEnd, Datetime $dateStart): bool
+    {
+        $isOk = false;
+
+        $data = [
+            'id' => $id,
+            'price' => $price,
+            'placeStart' => $placeStart,
+            'placeEnd' => $placeEnd,
+            'dateStart' => $dateStart->format(DateTime::RFC3339),
+        ];
+        $sql = 'UPDATE ads SET price = :price, placeStart = :placeStart, placeEnd = :placeEnd, dateStart = :dateStart WHERE id = :id;';
+        $query = $this->connection->prepare($sql);
+        $isOk = $query->execute($data);
+
+        return $isOk;
+    }
+
+    /**
+     * Delete the ad.
+     */
+    public function deleteAd(string $id): bool
+    {
+        $isOk = false;
+
+        $data = [
+            'id' => $id,
+        ];
+        $sql = 'DELETE FROM ads WHERE id = :id;';
+        $query = $this->connection->prepare($sql);
+        $isOk = $query->execute($data);
+
+        return $isOk;
+    }
 }
