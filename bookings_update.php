@@ -19,16 +19,24 @@ $users = $usersService->getUsers();
 <p>Mise à jour d'une réservation</p>
 <form method="post" action="bookings_update.php" name="bookingUpdateForm">
     <label for="id">Id :</label>
-    <input type="text" name="id">
+    <input type="text" name="id_booking">
     <br />
-    <label for="ad">Séléctionne une annonce :</label>
+    <label for="dayStart">Choisir une date au format dd-mm-yyyy :</label>
+    <input type="text" name="dayStart">
+    <br />
+    <label for="ad">Séléctionner une annonce :</label>
     <br />
     <?php foreach ($ads as $ad): ?>
-    <input type="radio" name="adId"
+    <input type="radio" name="ad_id"
         value="<?php echo $ad->getId(); ?>">
     <?php echo "Covoiturage de " . $ad->getPlaceStart() . " vers " . $ad->getPlaceEnd() . " à " . $ad->getDate()->format('d/m/Y'); ?>
     <br />
     <?php endforeach; ?>
     <br />
+    <label for="users">Covoitureur(s) :</label>
+    <?php foreach ($users as $user): ?>
+        <input type="checkbox" name="users[]" value="<?php echo $user->getId(); ?>"><?php echo $user->getFirstname() . ' ' . $user->getLastname(); ?>
+        <br />
+    <?php endforeach; ?>
     <input type="submit" value="Modifier">
 </form>

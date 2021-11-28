@@ -130,7 +130,7 @@ class BookingsService
         if (!empty($bookingUserLinkDTO)) {
             foreach ($bookingUserLinkDTO as $userDTO) {
                 $user = new User();
-                $user->setId($userDTO['id_user'])
+                $user->setId($userDTO['id'])
                     ->setFirstname($userDTO['firstname'])
                     ->setLastname($userDTO['lastname'])
                     ->setEmail($userDTO['email'])

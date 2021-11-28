@@ -445,7 +445,7 @@ class DataBaseService
      */
     public function getBookingUserLink(string $bookingId): array
     {
-        $bookingUser = [];
+        $bookingUserLink = [];
 
         $data = [
             'booking_id' => $bookingId,

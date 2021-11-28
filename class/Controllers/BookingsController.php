@@ -57,17 +57,17 @@ class BookingsController
 
         // Get html :
         foreach ($bookings as $booking) {
-            $html = '';
+            $adHtml = 'Annonce #';
             if (!empty($booking->getAd())) {
-                $ad = $booking->getAd();
-                $html .= $ad->getId() .
+                $ad = $booking->getAds();
+                $adHtml .= $ad->getId() . 
                 ' Lieu de départ : ' . $ad->getPlaceStart() .
                 " Lieu d'arrivée : " . $ad->getPlaceEnd();
             }
             
             $html .=
                 '#' . $booking->getId() . ' ' .
-                $booking->getDayStart()->format('d-m-Y') . ' ' .
+                $booking->get()->format('d-m-Y') . ' ' .
                 $html .
                 '<br />';
         }
@@ -113,10 +113,10 @@ class BookingsController
         $html = '';
 
         // If the form have been submitted :
-        if (isset($_POST['id'])) {
+        if (isset($_POST['id_booking'])) {
             // Delete the user :
             $usersService = new BookingsService();
-            $isOk = $usersService->deleteBooking($_POST['id']);
+            $isOk = $usersService->deleteBooking($_POST['id_booking']);
             if ($isOk) {
                 $html = 'Réservation supprimée avec succès.';
             } else {
