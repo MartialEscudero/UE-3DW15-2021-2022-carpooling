@@ -306,4 +306,140 @@ class DataBaseService
 
         return $isOk;
     }
+
+    /**
+     * Return all bookings.
+     */
+    public function getBookings(): array
+    {
+        $bookings = [];
+
+        $sql = 'SELECT * FROM bookings';
+        $query = $this->connection->query($sql);
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
+        if (!empty($results)) {
+            $bookings = $results;
+        }
+
+        return $bookings;
+    }
+
+    /**
+     * Create booking.
+     */
+    public function createBooking(DateTime $start_day, string $ad_id): string
+    {
+        $bookingId = '';
+
+        $data = [
+            'start_day' => $start_day->format(DateTime::RFC3339),
+            'ad_id' => $ad_id,
+        ];
+        $sql = 'INSERT INTO bookings (start_day, ad_id) VALUES (:start_day, :ad_id)';
+        $query = $this->connection->prepare($sql);
+        $isOk = $query->execute($data);
+        if ($isOk) {
+            $bookingId = $this->connection->lastInsertId();
+        }
+
+        return $bookingId;
+    }
+
+    /**
+     * Update booking.
+     */
+    public function updateBooking(string $id, DateTime $start_day, string $ad_id, array $users): bool
+    {
+        $isOk1 = false;
+        $isOk2 = false;
+
+        //update the booking
+        $data = [
+            'id_booking' => $id,
+            'start_day' => $start_day->format(DateTime::RFC3339),
+            'ad_id' => $ad_id,
+        ];
+        $sql = 'UPDATE bookings SET start_day = :start_day, ad_id = :ad_id WHERE id_booking = :id_booking;';
+        $query = $this->connection->prepare($sql);
+        $isOk1 = $query->execute($data);
+
+        //delete booking users relation
+        $data = [
+            'id_booking' => $id,
+        ];
+        $sql = 'DELETE FROM users_bookings WHERE booking_id = :id_booking;';
+        $query = $this->connection->prepare($sql);
+        $isOk2 = $query->execute($data);
+
+        //update booking users relation
+        foreach ($users as $user) {
+            //if error
+            if (!($this->setBookingUser($user, $id))) {
+                return false;
+            }
+        }
+
+        if ($isOk1 == $isOk2) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+      * Delete a booking.
+      */
+    public function deleteBooking(string $id): bool
+    {
+        $isOk = false;
+
+        $data = [
+            'id' => $id,
+        ];
+        $sql = 'DELETE FROM bookings WHERE id_booking = :id; DELETE FROM users_bookings WHERE booking_id = :id;';
+        $query = $this->connection->prepare($sql);
+
+        return $query->execute($data);
+    }
+
+    /**
+     * Create relation bewteen a booking and its user link.
+     */
+    public function setBookingUser(string $userId, string $bookingId): bool
+    {
+        $data = [
+            'userId' => $userId,
+            'bookingId' => $bookingId,
+        ];
+
+        $sql = 'INSERT INTO users_bookings (booking_id, user_id) VALUES (:bookingId, :userId)';
+        $query = $this->connection->prepare($sql);
+
+        return $query->execute($data);
+    }
+
+    /**
+     * Get carpooler of booking id.
+     */
+    public function getBookingUserLink(string $bookingId): array
+    {
+        $bookingUser = [];
+
+        $data = [
+            'booking_id' => $bookingId,
+        ];
+        $sql = '
+            SELECT u.*
+            FROM users as u
+            LEFT JOIN users_bookings as ub ON ub.user_id = u.id_user
+            WHERE ub.booking_id = :booking_id';
+        $query = $this->connection->prepare($sql);
+        $query->execute($data);
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
+        if (!empty($results)) {
+            $bookingUser = $results;
+        }
+
+        return $bookingUser;
+    }
 }

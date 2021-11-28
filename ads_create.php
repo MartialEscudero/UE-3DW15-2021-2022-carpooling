@@ -13,7 +13,7 @@ $users = $userController->getUsersSelect();
 ?>
 
 <p>Ajout d'une annonce</p>
-<form method="post" action="ads_create.php" name ="adsCreateForm">
+<form method="post" action="ads_create.php" name ="adCreateForm">
     <label for="user_id">Utilisateur :</label>
     <select name="user_id" id="user_id">
     <!-- Retourne l'id de l'utilisateur dans la value qui va permettre de faire le lien Utilisateur - Annonce -->
