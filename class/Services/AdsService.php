@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Entities\Ad;
+use App\Entities\User;
+use App\Entities\Booking;
 use DateTime;
 
 class AdsService
@@ -65,5 +67,36 @@ class AdsService
         $isOk = $dataBaseService->deleteAd($id);
 
         return $isOk;
+    }
+
+    /**
+     * Return all booking from ad.
+     */
+    public function getBookings(string $id): array
+    {
+        return [];
+    }
+
+    /**
+     * Return author of ad.
+     */
+    public function getUserId(string $userId): User
+    {
+        $user = new User();
+        $dataBaseService = new DataBaseService();
+        $userDTO = $dataBaseService->getUser($userId);
+
+        if (!empty($userDTO)) {
+            $user->setId($userDTO['id']);
+            $user->setFirstname($userDTO['firstname']);
+            $user->setLastname($userDTO['lastname']);
+            $user->setEmail($userDTO['email']);
+            $date = new DateTime($userDTO['birthday']);
+            if ($date !== false) {
+                $user->setBirthday($date);
+            }
+        }
+
+        return $user;
     }
 }

@@ -291,6 +291,28 @@ class DataBaseService
     }
 
     /**
+     * Return a user from its id.
+     */
+    public function getUser(string $id): array
+    {
+        $user = [];
+        $data = [
+            'id' => $id,
+        ];
+
+        $sql = 'SELECT * FROM users WHERE users.id = :id';
+        $query = $this->connection->prepare($sql);
+        $query->execute($data);
+
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+        if (!empty($result)) {
+            $user = $result;
+        }
+
+        return $user;
+    }
+
+    /**
      * Delete the ad.
      */
     public function deleteAd(string $id): bool
