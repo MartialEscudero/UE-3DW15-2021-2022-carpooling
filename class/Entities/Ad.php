@@ -4,7 +4,6 @@ namespace App\Entities;
 
 use DateTime;
 
-
 class Ad
 {
     private $id;

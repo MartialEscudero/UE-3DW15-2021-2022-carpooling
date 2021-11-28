@@ -89,7 +89,7 @@ class UsersController
         $usersSelect = $usersService->getUsers();
 
         foreach ($usersSelect as $userSelect) {
-            array_push($tabUsersSelect,[($userSelect->getFirstname()) . ' ' . $userSelect->getLastname(), ($userSelect->getid())]);
+            array_push($tabUsersSelect, [($userSelect->getFirstname()) . ' ' . $userSelect->getLastname(), ($userSelect->getid())]);
         }
 
         return $tabUsersSelect;

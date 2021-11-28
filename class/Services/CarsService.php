@@ -28,7 +28,6 @@ class CarsService
         }
 
         return $cars;
-        
     }
 
     /**
@@ -62,5 +61,4 @@ class CarsService
 
         return $isOk;
     }
-    
 }

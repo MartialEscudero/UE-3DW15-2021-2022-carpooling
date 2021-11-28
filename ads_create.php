@@ -17,8 +17,8 @@ $users = $userController->getUsersSelect();
     <label for="user_id">Utilisateur :</label>
     <select name="user_id" id="user_id">
     <!-- Retourne l'id de l'utilisateur dans la value qui va permettre de faire le lien Utilisateur - Annonce -->
-    <?php foreach($users as $user) { ?>
-        <option value="<?php echo ($user[1]); ?>"><?php echo ($user[0]); ?></option>
+    <?php foreach ($users as $user) { ?>
+        <option value="<?php echo($user[1]); ?>"><?php echo($user[0]); ?></option>
     <?php } ?>
     </select>
     <br />

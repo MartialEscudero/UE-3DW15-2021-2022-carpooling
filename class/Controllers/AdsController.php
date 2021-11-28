@@ -100,21 +100,21 @@ class AdsController
             isset($_POST['placeStart']) &&
             isset($_POST['placeEnd']) &&
             isset($_POST['dateStart'])) {
-            // Update the ad :
-            $adsService = new AdsService();
-            $isOk = $adsService->setAd(
-                $_POST['id'],
-                $_POST['price'],
-                $_POST['placeStart'],
-                $_POST['placeEnd'],
-                $_POST['dateStart']
-            );
-            if ($isOk) {
-                $html = 'Annonce mise à jour avec succès.';
-            } else {
-                $html = 'Erreur lors de la mise à jour de l\'annonce.';
+                // Update the ad :
+                $adsService = new AdsService();
+                $isOk = $adsService->setAd(
+                    $_POST['id'],
+                    $_POST['price'],
+                    $_POST['placeStart'],
+                    $_POST['placeEnd'],
+                    $_POST['dateStart']
+                );
+                if ($isOk) {
+                    $html = 'Annonce mise à jour avec succès.';
+                } else {
+                    $html = 'Erreur lors de la mise à jour de l\'annonce.';
+                }
             }
-        }
 
         return $html;
     }

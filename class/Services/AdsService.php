@@ -32,7 +32,6 @@ class AdsService
         }
 
         return $ads;
-        
     }
 
     /**
@@ -67,5 +66,4 @@ class AdsService
 
         return $isOk;
     }
-    
 }
