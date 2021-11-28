@@ -57,18 +57,9 @@ class BookingsController
 
         // Get html :
         foreach ($bookings as $booking) {
-            $adHtml = 'Annonce #';
-            if (!empty($booking->getAd())) {
-                $ad = $booking->getAds();
-                $adHtml .= $ad->getId() . 
-                ' Lieu de départ : ' . $ad->getPlaceStart() .
-                " Lieu d'arrivée : " . $ad->getPlaceEnd();
-            }
-            
             $html .=
                 '#' . $booking->getId() . ' ' .
-                $booking->get()->format('d-m-Y') . ' ' .
-                $html .
+                '- Date du départ : ' . $booking->getStartDay()->format('d-m-Y') . ' ' . '- Annonce n°' . $booking->getIdAd() .
                 '<br />';
         }
 

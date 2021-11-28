@@ -7,7 +7,7 @@ use DateTime;
 class Booking
 {
     private $id;
-    private $day_start;
+    private $start_day;
     private $ad_id;
     private $ad;
     private $user_link;
@@ -24,26 +24,26 @@ class Booking
         return $this;
     }
 
-    public function getDayStart(): DateTime
+    public function getStartDay(): DateTime
     {
-        return $this->dayStart;
+        return $this->start_day;
     }
 
-    public function setDayStart(DateTime $dayStart): self
+    public function setStartDay(DateTime $start_day): self
     {
-        $this->dayStart = $dayStart;
+        $this->start_day = $start_day;
 
         return $this;
     }
 
     public function getIdAd(): string
     {
-        return $this->id_ad;
+        return $this->ad_id;
     }
 
-    public function setIdAd(string $id_ad): self
+    public function setIdAd(string $ad_id): self
     {
-        $this->id_ad = $id_ad;
+        $this->ad_id = $ad_id;
 
         return $this;
     }

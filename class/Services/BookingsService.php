@@ -25,16 +25,10 @@ class BookingsService
                 $booking->setIdAd($bookingDTO['ad_id']);
                 $date = new DateTime($bookingDTO['start_day']);
                 if ($date !== false) {
-                    $booking->setDayStart($date);
+                    $booking->setStartDay($date);
                 }
+                // $booking->setUserLink($bookingDTO['user_link_id']);
 
-                // Set booking's ad
-                $ad = $this->getAd($bookingDTO['ad_id']);
-                $booking->setAd($ad);
-
-                // Get users link to booking
-                $user_link = $this->getBookings($bookingDTO['id_booking']);
-                $booking->setUserLink($user_link);
 
                 $bookings[] = $booking;
             }
