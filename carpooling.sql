@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Generation Time: Nov 22, 2021 at 06:21 PM
+-- Generation Time: Nov 28, 2021 at 07:54 PM
 -- Server version: 8.0.22
 -- PHP Version: 7.4.20
 
@@ -43,6 +43,26 @@ INSERT INTO `ads` (`id`, `price`, `placeStart`, `placeEnd`, `dateStart`) VALUES
 (1, 50, 'Paris', 'Marseille', '2021-11-22 16:15:28'),
 (2, 30, 'Nantes', 'Angers', '2021-11-19 16:18:33'),
 (7, 60, 'Nice', 'Paris', '2021-12-10 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bookings`
+--
+
+CREATE TABLE `bookings` (
+  `id_booking` int NOT NULL,
+  `start_day` datetime NOT NULL,
+  `ad_id` int NOT NULL,
+  `user_link_id` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `bookings`
+--
+
+INSERT INTO `bookings` (`id_booking`, `start_day`, `ad_id`, `user_link_id`) VALUES
+(1, '2021-11-25 00:00:00', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -96,6 +116,24 @@ INSERT INTO `users` (`id`, `firstname`, `lastname`, `email`, `birthday`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `users_bookings`
+--
+
+CREATE TABLE `users_bookings` (
+  `user_id` int NOT NULL,
+  `booking_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `users_bookings`
+--
+
+INSERT INTO `users_bookings` (`user_id`, `booking_id`) VALUES
+(1, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users_cars`
 --
 
@@ -125,6 +163,12 @@ ALTER TABLE `ads`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `bookings`
+--
+ALTER TABLE `bookings`
+  ADD PRIMARY KEY (`id_booking`);
+
+--
 -- Indexes for table `cars`
 --
 ALTER TABLE `cars`
@@ -135,6 +179,12 @@ ALTER TABLE `cars`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users_bookings`
+--
+ALTER TABLE `users_bookings`
+  ADD PRIMARY KEY (`user_id`,`booking_id`);
 
 --
 -- Indexes for table `users_cars`
@@ -151,6 +201,12 @@ ALTER TABLE `users_cars`
 --
 ALTER TABLE `ads`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `bookings`
+--
+ALTER TABLE `bookings`
+  MODIFY `id_booking` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `cars`
